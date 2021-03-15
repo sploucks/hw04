@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <math.h>
+
+void userInput(int*, int*, int*);
+int getDecember31(int);
+int getLeapYear(int);
+int getDayOfYear(int, int);
+int totalDays();
+int getMonth(int, int, int, int, int*);
+int getDayOfMonth(int, int, int, int);
+int displayResults(int, int, int, int, int);
+
+int main()
+{
+    //variable declarations
+    int year;
+    int weekDay;
+    int occurrence;
+    int dec31;
+    int month;
+    int leapYear;
+    int dayOfMonth;
+    int dayOfYear;
+    
+    //function calls
+    userInput(&year, &weekDay, &occurrence);
+    dec31 = getDecember31(year);
+    leapYear = getLeapYear(year);
+    dayOfYear = getDayOfYear(occurrence, weekDay);
+    totalDays();
+    month = getMonth(dec31, weekDay, occurrence, leapYear, dayOfYear);
+    dayOfMonth = getDayOfMonth(month, weekDay, occurrence, dayOfYear);
+    displayResults(occurrence, weekDay, year, month, dayOfMonth);
+
+    return 0;
+}
+
+void userInput(int *year, int *weekDay, int *occurrence)
+{
+   printf("Enter year number -> ");
+   scanf("%i", &*year);
+   printf("Enter day of week number -> ");
+   scanf("%i", &*weekDay);
+   printf("Enter occurrence number -> ");
+   scanf("%i", &*occurrence);
+}
+
+int getDecember31(int thisYear)
+{
+    int lastYear;
+    int dec31;
+    lastYear = thisYear - 1;
+    dec31 = (lastYear * 365 + (lastYear / 4) - (lastYear / 100) + (lastYear / 400)) % 7;
+    return(dec31);
+}
+
+int getLeapYear(int year)
+{
+    int leapYearPossible;
+    leapYearPossible = (!(year % 4) && (year % 100)) || !(year % 400);
+    return(leapYearPossible);
+}
+
+int getDayOfYear(occurrence, weekDay)
+{
+    int result;
+    result = (occurrence - 1) * 7 + weekDay;
+    return(result);
+}
+
+int totalDays()
+{
+    
+}
+
+int getMonth(int dec31, int weekDay, int occurrence, int leapYear, int dayOfYear)
+{
+    int month;
+    
+    if(dayOfYear <= 31) {
+        month = 1;
+        dayOfMonth = dayOfYear;
+    }
+    else if(dayOfYear <= (31 + 28 + leapYear)) {
+        month = 2;
+        dayOfMonth = dayOfYear - 31;
+    }
+    else if(dayOfYear <= (31 * 2 + 28 + leapYear)) {
+        month = 3;
+        dayOfMonth = dayOfYear - (31 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 2 + 30 + 28 + leapYear)) {
+        month = 4;
+        dayOfMonth = dayOfYear - (31 * 2 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 3 + 30 + 28 + leapYear)){
+        month = 5;
+        dayOfMonth = dayOfYear - (31 * 2 + 30 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 3 + 30 * 2 + 28 + leapYear)) {
+        month = 6;
+        dayOfMonth = dayOfYear - (31 * 3 + 30 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 4 + 30 * 2 + 28 + leapYear)) {
+        month = 7;
+        dayOfMonth = dayOfYear - (31 * 3 + 30 * 2 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 5 + 30 * 2 + 28 + leapYear)) {
+        month = 8;
+        dayOfMonth = dayOfYear - (31 * 4 + 30 * 2 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 5 + 30 * 3 + 28 + leapYear)) {
+        month = 9;
+        dayOfMonth = dayOfYear - (31 * 5 + 30 * 2 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 6 + 30 * 3 + 28 + leapYear)) {
+        month = 10;
+        dayOfMonth = dayOfYear - (31 * 5 + 30 * 3 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 6 + 30 * 4 + 28 + leapYear)) {
+        month = 11;
+        dayOfMonth = dayOfYear - (31 * 6 + 30 * 3 + 28 + leapYear);
+    }
+    else if(dayOfYear <= (31 * 7 + 30 * 4 + 28 + leapYear)) {
+        month = 12;
+        dayOfMonth = dayOfYear - (31 * 6 + 30 * 4 + 28 + leapYear);
+    }
+    else {
+        printf("Invalid input for day of week number and/or occurence number.\n");
+    }
+
+    return(month);
+}
+
+int getDayOfMonth(int month, int weekDay, int occurrence, int dayOfYear)
+{
+    int dayOfMonth;
+    dayOfMonth = dayOfYear //minus formula for total days
+    return(dayOfMonth);
+}
+
+int displayResults(int occurrence, int weekDay, int year, int month, int dayOfMonth)
+{
+    printf("Desired occurrence #%i of %s in %i: %s %i", occurrence, weekDay, year, month, dayOfMonth);
+}
